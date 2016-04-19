@@ -1,0 +1,24 @@
+{
+  "name": "trycatch-chat",
+  "version": "0.0.1",
+  "description": "A chat app written in Express + MongoDB + React + Redux as an exercise for http://trycatch.tech/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:andrefs/trycatch-chat.git"
+  },
+  "keywords": [
+    "chat",
+    "react",
+    "redux",
+    "express",
+    "mongodb",
+    "mongo",
+    "trycatch"
+  ],
+  "author": "André Santos",
+  "license": "ISC"
+}
