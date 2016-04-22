@@ -1,4 +1,6 @@
 *.swp
+*.log
 .tmp
 dist
 node_modules
+bower_components
