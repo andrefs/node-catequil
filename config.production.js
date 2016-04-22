@@ -1,6 +1,6 @@
 module.exports = {
     db: {
-        uri: 'mongodb://localhost/trycatch_chat'
+        uri: 'mongodb://localhost/catequil'
     },
     server: {
         port: 9753

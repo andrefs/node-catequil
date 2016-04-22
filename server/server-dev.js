@@ -7,7 +7,7 @@ import * as Router from 'react-router';
 import ReactDOM from 'react-dom/server';
 import routes   from '../shared/routes';
 import config   from '../config';
-
+import passport from './passport';
 
 let app = new express();
 
@@ -17,7 +17,7 @@ let mongo_uri = process.env.MONGO_URI;
 if(!mongo_uri && config && config.db && config.db.uri){
     mongo_uri = config.db.uri;
 } else {
-    mongo_uri = 'mongodb://localhost/trycatch_chat_noconfig';
+    mongo_uri = 'mongodb://localhost/catequil_noconfig';
     console.warn(`MongoDB URI not set, using hardcoded default: ${mongo_uri} ...`);
 }
 mongoose.connect(mongo_uri);
@@ -35,6 +35,8 @@ app.use(express.static(__dirname+'/../public/')); // static files path
 
 
 // routing
+
+require('./routes/users')(app, passport);
 
 app.get('/status', (req, res) => {
     res.send('Server is running and accepting requests!');

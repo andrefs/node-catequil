@@ -1,8 +1,13 @@
 module.exports = {
     db: {
-        uri: 'mongodb://localhost/trycatch_chat_dev'
+        uri: 'mongodb://localhost/catequil_dev'
     },
     server: {
-        port: 9753
+        port: 9753,
+        host: 'localhost'
+    },
+    facebook: {
+        clientID:     undefined, /* Fill this in with your Facebook App ID     */,
+        clientSecret: undefined, /* Fill this in with your Facebook App Secret */
     }
 };
