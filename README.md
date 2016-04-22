@@ -5,6 +5,18 @@ Currently it is still very much a work in progress.
 ## Installation
 
 
+## Running
+
+### Development
+
+* npm run dev:static
+* npm run dev:server
+
+### Production
+
+* npm run build
+* ...
+
 ## Dependencies
 
 

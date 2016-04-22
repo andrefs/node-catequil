@@ -1,28 +1,15 @@
 import express  from 'express';
 import mongoose from 'mongoose';
 import async    from 'async';
-import passport from './passport';
 import logger   from 'morgan';
 import React    from 'react';
 import * as Router from 'react-router';
 import ReactDOM from 'react-dom/server';
 import routes   from '../shared/routes';
-import webpack from 'webpack';
-import webpackConfig from '../webpack.config-dev'
 let config = require('../config.'+(process.env.NODE_ENV || 'development'));
 
 
 let app = new express();
-
-// Webpack
-
-const compiler = webpack(webpackConfig);
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: webpackConfig.output.publicPath
-}));
-app.use(require('webpack-hot-middleware')(compiler));
-
 
 // Database connection
 
@@ -44,12 +31,10 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(logger('dev'));                         // logger
 app.set('views', './server/views');             // view engine setup
 app.set('view engine', 'hbs');                  // views folder
-app.use(express.static(__dirname+'/../dist/')); // static files path
+app.use(express.static(__dirname+'/../public/')); // static files path
 
 
 // routing
-
-require('./routes/users')(app, passport);
 
 app.get('/status', (req, res) => {
     res.send('Server is running and accepting requests!');
