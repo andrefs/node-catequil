@@ -6,7 +6,7 @@ import React    from 'react';
 import * as Router from 'react-router';
 import ReactDOM from 'react-dom/server';
 import routes   from '../shared/routes';
-let config = require('../config.'+(process.env.NODE_ENV || 'development'));
+import config   from '../config';
 
 
 let app = new express();
