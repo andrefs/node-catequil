@@ -8,7 +8,10 @@
         <link rel="stylesheet" href="/css/main.css"/>
     </head>
     <body>
-        <div id="app">{{{ html }}}</div>
+        <div id="app">
+            <!-- This extra div seems stupid, but prevents React conflicts between browser vs server rendering -->
+            <div>{{{ html }}}<div>
+        </div>
 
         <!-- JavaScript -->
         <script src="/js/vendor.js"></script>
