@@ -8,6 +8,9 @@ import ReactDOM from 'react-dom/server';
 import routes   from '../shared/routes';
 import config   from '../config';
 import passport from './passport';
+import {Provider} from 'react-redux';
+import configStore from '../shared/store/configStore';
+import {syncHistoryWithStore}  from 'react-router-redux'
 
 let app = new express();
 
@@ -43,7 +46,16 @@ app.get('/status', (req, res) => {
 });
 
 app.use(function(req, res){
-    Router.match({routes: routes, location: req.url}, (err, redirectLocation, renderProps) => {
+
+    // Store and history
+    const memoryHistory = Router.createMemoryHistory(req.url)
+    const store = configStore(memoryHistory)
+    const history = syncHistoryWithStore( memoryHistory, store, {
+        selectLocationState: state => state.get('routing').toJS()
+    });
+
+    Router.match({history, routes, location: req.url}, (err, redirectLocation, renderProps) => {
+
         // Error
         if(err){
             console.error(err);
@@ -59,8 +71,19 @@ app.use(function(req, res){
 
         // Ok
         else if (renderProps) {
-            var html = ReactDOM.renderToString(React.createElement(Router.RouterContext, renderProps));
-            res.render('index.hbs',{layout:false, html: html});
+            var html = ReactDOM.renderToString(
+                <Provider className="root" store={store}>
+                    <Router.RouterContext {...renderProps} />
+                </Provider>
+            );
+
+            const initialState = store.getState();
+
+            res.render('index.hbs',{
+                layout       : false,
+                html         : html,
+                initialState : JSON.stringify(initialState)
+            });
         }
 
         // Not found
