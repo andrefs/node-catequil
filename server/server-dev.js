@@ -77,7 +77,7 @@ async.series([
     function(next){ db.once('open', next); },
     function(next){
         console.info(`Connected to MongoDB database ${mongo_uri}`);
-        app.listen(port, next);
+        app.listen(port,'0.0.0.0', next);
     }],
     function(err){
         if(err){

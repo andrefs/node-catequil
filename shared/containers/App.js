@@ -1,13 +1,13 @@
 import React from 'react';
 
-class App extends React.Component {
+class Start extends React.Component {
     render(){
         return (
-            <div className="container">
+            <div>
                 {this.props.children}
             </div>
         );
     }
 }
 
-export default App;
+export default Start;
