@@ -7,10 +7,7 @@ class Start extends React.Component {
             <div>
                 <Navbar />
                 <div className="container">
-                    <h1>Start</h1>
                     {this.props.children}
-                    <div id="loginbox" className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                    </div>
                 </div>
             </div>
         );
