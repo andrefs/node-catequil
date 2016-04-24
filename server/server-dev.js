@@ -54,7 +54,7 @@ app.use(function(req, res){
         selectLocationState: state => state.get('routing').toJS()
     });
 
-    Router.match({history, routes, location: req.url}, (err, redirectLocation, renderProps) => {
+    Router.match({history, routes: routes(store), location: req.url}, (err, redirectLocation, renderProps) => {
 
         // Error
         if(err){
