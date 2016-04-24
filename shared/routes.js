@@ -5,14 +5,25 @@ import Chat     from './containers/Chat';
 import Start    from './containers/Start';
 import LoginContainer    from './containers/LoginContainer';
 import RegisterContainer from './containers/RegisterContainer';
-import { isLoggedIn } from './reducers/Auth';
+import {UserAuthWrapper} from 'redux-auth-wrapper'
+import {routerActions} from 'react-router-redux';
+import {push} from 'react-router-redux';
+
+
+
+
+// Redirects to /login by default
+const Auth = UserAuthWrapper({
+    authSelector :
+        state => state.getIn(['auth']), // how to get the user state
+    predicate: authData => !!authData.get('token'), // decide whether to fail or succeed
+    failureRedirectPath : '/',
+    wrapperDisplayName  : 'Auth'    // a nice name for this auth check
+})
 
 export default function routes(store) {
-    const requireLogin = (nextState, replace) => {
-        if (store && !isLoggedIn(store.getState())) {
-            replace('/');
-        }
-    };
+
+    const connect = (fn) => (nextState, replaceState) => fn(store, nextState, replaceState);
 
     return (
         <Route path='/' component={App}>
@@ -20,7 +31,8 @@ export default function routes(store) {
                 <IndexRoute component={LoginContainer} />
                 <Route path='/register' component={RegisterContainer} />
             </Route>
-            <Route path='/chat' onEnter={requireLogin} component={Chat} />
+            <Route path='/chat' component={Auth(Chat)} onEnter={connect(Auth.onEnter)} />
         </Route>
     );
 };
+

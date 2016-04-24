@@ -6,19 +6,17 @@ import configStore             from '../shared/store/configStore';
 import {syncHistoryWithStore}  from 'react-router-redux'
 import {Provider}              from 'react-redux';
 import Immutable               from 'immutable';
-//import {loadAuth}            from '../shared/actions/auth';
-
+import {loadAuth}              from '../shared/actions/auth';
 
 const initialState = Immutable.fromJS(window.__INITIAL_STATE__);
 
-const rootElement = document.getElementById('app');
-const store = configStore(initialState);
-//store.dispatch(loadAuth());
+
+const store = configStore(browserHistory,initialState);
+store.dispatch(loadAuth());              // try to load token from localStorage
 
 const history = syncHistoryWithStore(browserHistory, store, {
     selectLocationState: state => state.get('routing').toJS()
 });
-
 
 ReactDOM.render(
     <Provider store={store}>

@@ -60,7 +60,10 @@ gulp.task('browserify-vendor', function() {
 gulp.task('browserify', ['browserify-vendor'], function() {
     return browserify({ entries: 'client/client.js', debug: true })
         .external(dependencies)
-        .transform(babelify, { presets: ['es2015', 'react'] })
+        .transform(babelify, {
+            presets: ['es2015','stage-0', 'react'],
+            plugins: ["transform-decorators-legacy"]
+        })
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
@@ -78,7 +81,10 @@ gulp.task('browserify', ['browserify-vendor'], function() {
 gulp.task('browserify-watch', ['browserify-vendor'], function() {
     var bundler = watchify(browserify({ entries: 'client/client.js', debug: true }, watchify.args));
     bundler.external(dependencies);
-    bundler.transform(babelify, { presets: ['es2015', 'react'] });
+    bundler.transform(babelify, {
+            presets: ['es2015','stage-0', 'react'],
+            plugins: ["transform-decorators-legacy"]
+    });
     bundler.on('update', rebundle);
     return rebundle();
 
@@ -114,7 +120,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('client/stylesheets/**/*.less', ['styles']);
+    gulp.watch('client/stylesheets/main.less', ['styles']);
 });
 
 

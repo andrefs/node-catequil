@@ -1,4 +1,6 @@
 import bodyParser from 'body-parser';
+import config   from '../../config';
+import jwt from 'jwt-simple';
 
 module.exports = function(app, passport){
 
@@ -30,9 +32,17 @@ module.exports = function(app, passport){
     });
 
     app.route('/login')
-    .post(passport.authenticate('local-login', {session:false}), function(req, res){
+    .post(passport.authenticate('local-login', {session:false}), function(req, res, next){
+        const now = Date.now();
+        const week_later = now + 7*24*60*60;
+        const claims = {
+            sub: req.user.id,
+            iat: now,
+            exp: week_later
+        };
+        let token = jwt.encode(claims, config.auth.jwt.secret);
         console.info(`User logged in with local-login: ${req.user.local.username}`);
-        res.json(req.user);
+        res.json({token: token});
     });
 
 };

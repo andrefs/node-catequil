@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Register from '../components/Register';
+import {getAuthError} from '../reducers/authReducer';
+import {register} from '../actions/auth';
+import {connect} from 'react-redux';
 
 
-class RegisterContainer extends React.Component {
+@connect(
+    (state) => ({ error: getAuthError(state) }),
+    {register}
+)
+
+class RegisterContainer extends Component {
+    static propTypes = {
+        error: PropTypes.string,
+        register: PropTypes.func.isRequired
+    };
+
     render(){
         return (
-            <Register />
+            <Register {...this.props} />
         )
     }
 }

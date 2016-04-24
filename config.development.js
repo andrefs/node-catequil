@@ -9,5 +9,10 @@ module.exports = {
     facebook: {
         clientID:     undefined, /* Fill this in with your Facebook App ID     */,
         clientSecret: undefined, /* Fill this in with your Facebook App Secret */
+    },
+    auth: {
+        jwt: {
+            secret: 'Edit this string and keep it secret'
+        }
     }
 };

@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import {handleActions} from 'redux-actions';
 import {
-  AUTH_LOAD_SUCCESS,
+  AUTH_LOAD_FINISHED,
   AUTH_LOGIN_REQUEST,
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGIN_FAILURE,
@@ -13,7 +13,7 @@ const initialState = Immutable.fromJS({
 });
 
 export default handleActions({
-    [AUTH_LOAD_SUCCESS]  : (state, {payload: {token}}) => state.merge({ token }),
+    [AUTH_LOAD_FINISHED] : (state, {payload: {token}}) => state.merge({token}),
     [AUTH_LOGIN_REQUEST] : (state)                     => state.set('isLoggingIn', true),
     [AUTH_LOGIN_SUCCESS] : (state, {payload: {token}}) => {
         return state.merge({

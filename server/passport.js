@@ -7,6 +7,7 @@ import config from '../config';
 // User register
 
 passport.use('local-register', new LocalStrategy(
+    {usernameField: 'email'},
     function(username, password, cb){
         User.findOne({'local.username':username},function(err,user){
             if(err){ return cb(err); }
@@ -30,6 +31,7 @@ passport.use('local-register', new LocalStrategy(
 
 // User login
 passport.use('local-login', new LocalStrategy(
+    {usernameField: 'email'},
     function(username, password, cb) {
         User.findOne({'local.username': username},function(err,user){
             // Error

@@ -36,7 +36,6 @@ app.set('views', './server/views');             // view engine setup
 app.set('view engine', 'hbs');                  // views folder
 app.use(express.static(__dirname+'/../public/')); // static files path
 
-
 // routing
 
 require('./routes/users')(app, passport);
