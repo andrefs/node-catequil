@@ -39,6 +39,8 @@ app.use(express.static(__dirname+'/../public/')); // static files path
 // routing
 
 require('./routes/users')(app, passport);
+require('./routes/channels')(app);
+require('./routes/messages')(app);
 
 app.get('/status', (req, res) => {
     res.send('Server is running and accepting requests!');

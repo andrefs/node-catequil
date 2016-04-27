@@ -54,6 +54,7 @@
     "jquery": "2.2.3",
     "jwt-simple": "0.5.0",
     "mongoose": "4.4.12",
+    "mongoose-list": "0.2.2",
     "morgan": "1.7.0",
     "nodemon": "1.9.1",
     "npm-run-all": "1.7.0",
