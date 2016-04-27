@@ -8,7 +8,7 @@ import {combineReducers} from 'redux-immutable';
 import routerReducer from '../reducers/RouterReducer';
 import usersReducer from '../reducers/usersReducer';
 import authReducer from '../reducers/authReducer';
-import channelsReducer from '../reducers/channelsReducer';
+import channels from '../reducers/channels';
 
 let logger = createLogger({
     //actionTransformer: state => JSON.stringify(state, null, 4),
@@ -21,7 +21,7 @@ export default function configStore(history, initialState = defaultInitialState)
     const reducer = combineReducers({
         routing : routerReducer,
         auth    : authReducer,
-        channels: channelsReducer,
+        channels,
         users: usersReducer,
     });
 

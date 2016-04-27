@@ -5,11 +5,12 @@ import {push} from 'react-router-redux';
 import {
     CHANNELS_FETCH_REQUEST,
     CHANNELS_FETCH_SUCCESS,
-    CHANNELS_FETCH_FAILURE
+    CHANNELS_FETCH_FAILURE,
+    CHANGE_CHANNEL,
 } from '../constants';
 
 
-export function fetchChannels(data) {
+const fetchChannels = function(data) {
     return (dispatch) => {
         dispatch(channelsRequest());
 
@@ -21,6 +22,9 @@ export function fetchChannels(data) {
         .catch(error => {throw error});
     };
 };
+
+const changeChannel = createAction(CHANGE_CHANNEL);
+export {changeChannel, fetchChannels};
 
 const channelsSuccess = createAction(CHANNELS_FETCH_SUCCESS);
 const channelsRequest = createAction(CHANNELS_FETCH_REQUEST);
