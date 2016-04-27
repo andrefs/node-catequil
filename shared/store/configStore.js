@@ -6,8 +6,9 @@ import thunk from 'redux-thunk';
 
 import {combineReducers} from 'redux-immutable';
 import routerReducer from '../reducers/RouterReducer';
-//import userReducer from '../reducers/userReducer';
+import usersReducer from '../reducers/usersReducer';
 import authReducer from '../reducers/authReducer';
+import channelsReducer from '../reducers/channelsReducer';
 
 let logger = createLogger({
     //actionTransformer: state => JSON.stringify(state, null, 4),
@@ -19,7 +20,9 @@ const defaultInitialState = new Immutable.Map();
 export default function configStore(history, initialState = defaultInitialState){
     const reducer = combineReducers({
         routing : routerReducer,
-        auth    : authReducer
+        auth    : authReducer,
+        channels: channelsReducer,
+        users: usersReducer,
     });
 
     const store = createStore(

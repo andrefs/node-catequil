@@ -1,11 +1,24 @@
 import bodyParser from 'body-parser';
 import config   from '../../config';
 import jwt from 'jwt-simple';
+import User from '../models/User';
 
 module.exports = function(app, passport){
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:false}));
+
+    //
+
+    app.route('/api/users')
+    .get(function(req, res){
+        let start =  0;
+        let limit = 10;
+        User.list({start, limit}, function(err, count, results){
+            res.json(results);
+        });
+    });
+
 
     // Facebook
 

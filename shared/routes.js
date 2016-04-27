@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Redirect, IndexRoute} from 'react-router';
 import App      from './containers/App';
-import Chat     from './containers/Chat';
+import ChatContainer     from './containers/ChatContainer';
 import Start    from './containers/Start';
 import LoginContainer    from './containers/LoginContainer';
 import RegisterContainer from './containers/RegisterContainer';
@@ -31,7 +31,7 @@ export default function routes(store) {
                 <IndexRoute component={LoginContainer} />
                 <Route path='/register' component={RegisterContainer} />
             </Route>
-            <Route path='/chat' component={Auth(Chat)} onEnter={connect(Auth.onEnter)} />
+            <Route path='/chat' component={Auth(ChatContainer)} onEnter={connect(Auth.onEnter)} />
         </Route>
     );
 };

@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt-nodejs';
 import mongoose from 'mongoose';
+import listPlugin from 'mongoose-list';
+
+mongoose.plugin(listPlugin, {searchFields:['participants']});
 
 var UserSchema = mongoose.Schema({
     local: {
