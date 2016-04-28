@@ -15,7 +15,13 @@ class Chat extends Component {
         users         : PropTypes.instanceOf(Immutable.List).isRequired,
         messages      : PropTypes.instanceOf(Immutable.Map).isRequired,
         changeChannel : PropTypes.func.isRequired,
+        logout        : PropTypes.func.isRequired
     };
+
+    handleLogout = (e) => {
+        e.preventDefault();
+        this.props.logout();
+    }
 
     render(){
         const {socket, channels, users, messages, dispatch, changeChannel} = this.props;
@@ -49,7 +55,7 @@ class Chat extends Component {
                 </Col>
                 {/* Chat main area */}
                 <Col md={10} style={{height:'100%',padding:0, display:'table-cell',padding:0}} >
-                    <div style={{width:'100%', position:'fixed', top:0}}>
+                    <Col md={10} style={{position:'fixed', top:0}}>
 
                         {/* Nav bar */}
                         <nav style={{position: 'relative'}} className="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -60,10 +66,13 @@ class Chat extends Component {
                                 <Navbar.Toggle />
                             </Navbar.Header>
                             <Navbar.Collapse>
-                                <Navbar.Text>{numParticipants} members</Navbar.Text>
+                                <Navbar.Text pullLeft>{numParticipants} members</Navbar.Text>
+                                <Navbar.Form pullRight>
+                                  <Button onClick={this.handleLogout}>Logout</Button>
+                                </Navbar.Form>
                             </Navbar.Collapse>
                         </nav>
-                    </div>
+                    </Col>
 
                     {/* Messages */}
                     <Messages messages={messages} activeChannel={activeChannel} />

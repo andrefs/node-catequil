@@ -5,10 +5,18 @@ import {fetchChannels,changeChannel} from '../actions/channels';
 import {fetchUsers} from '../actions/users';
 import {connect} from 'react-redux';
 import {fetchMessages} from '../actions/messages';
+import {logout} from '../actions/auth';
+import { bindActionCreators } from 'redux'
 
 //import io from 'socket.io-client';
 //const socket = io('', { path: '/api/chat' });
 const socket = '';
+
+
+@connect(
+    mapStateToProps,
+    mapDispatchToProps
+)
 
 class ChatContainer extends Component {
 
@@ -41,4 +49,11 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(ChatContainer)
+function mapDispatchToProps(dispatch){
+    return {
+        dispatch,
+        logout: bindActionCreators(logout, dispatch)
+    }
+}
+
+export default ChatContainer;
