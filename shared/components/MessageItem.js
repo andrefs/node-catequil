@@ -13,7 +13,7 @@ class MessageItem extends React.Component {
         const minutes = sentAt.getMinutes();
         const time    = (hour < 10 ? '0' : '')+hour+(minutes < 10 ? ':0' : ':')+minutes;
         const author  = message.get('author');
-        const username  = author.getIn(['local','username']) || author.getIn(['facebook','username']);
+        const username  = author.get('username') || author.getIn(['local','username']) || author.getIn(['facebook','username']);
         const photoURL = author.get('photo') || author.getIn(['facebook','photo']) || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Noun_project_1248.svg/2000px-Noun_project_1248.svg.png'; // TODO: get from config
 
         return (

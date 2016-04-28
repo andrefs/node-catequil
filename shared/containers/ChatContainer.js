@@ -5,6 +5,7 @@ import {fetchChannels,changeChannel} from '../actions/channels';
 import {fetchUsers} from '../actions/users';
 import {connect} from 'react-redux';
 import {logout} from '../actions/auth';
+import {sendMessage} from '../actions/messages';
 import { bindActionCreators } from 'redux'
 
 //import io from 'socket.io-client';
@@ -46,14 +47,16 @@ function mapStateToProps(state) {
         users: state.getIn(['users','list']),
         messages: state.get('messages'),
         activeChannel: state.getIn(['channels','activeChannel']),
-        token: state.getIn(['auth','token'])
+        token: state.getIn(['auth','token']),
+        user: state.getIn(['auth','user']),
     }
 }
 
 function mapDispatchToProps(dispatch){
     return {
         dispatch,
-        logout: bindActionCreators(logout, dispatch)
+        logout: bindActionCreators(logout, dispatch),
+        sendMessage: bindActionCreators(sendMessage, dispatch)
     }
 }
 

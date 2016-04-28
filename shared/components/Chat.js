@@ -24,6 +24,28 @@ class Chat extends Component {
         this.props.logout();
     }
 
+    handleSubmit = (e) => {
+        const {activeChannel,token,user} = this.props;
+        if(e.which === 13){
+            e.preventDefault();
+            const text = this.refs.message.value.trim();
+            const activeChannelID = activeChannel.get('_id');
+
+            const newMessage = {
+                _id: Date.now(),
+                text,
+                channel: activeChannelID,
+                author:user,
+                sentAt: new Date().toISOString()
+            };
+
+            this.props.sendMessage(newMessage);
+
+            this.refs.message.value = '';
+        }
+    }
+
+
     render(){
         const {socket, channels, users, messages, dispatch, changeChannel, token} = this.props;
         const activeChannel = channels.getIn(['activeChannel'])
@@ -39,7 +61,7 @@ class Chat extends Component {
                         <ul>
                             {channels.get('list').map(channel =>
                                 <li key={channel.get('name')} onClick={() => changeChannel(channel, token)} >
-                                    {channel.get('name')}
+                                    <a href="#">{channel.get('name')}</a>
                                 </li>
                             )}
                         </ul>
@@ -49,7 +71,7 @@ class Chat extends Component {
                         <h2>Users</h2>
                         <ul>
                             {users.map(user =>
-                                <li key={user.get('_id')} >{user.getIn(['local','username'])}</li>
+                                <li key={user.get('_id')} >{user.get('username')}</li>
                             )}
                         </ul>
                     </div>

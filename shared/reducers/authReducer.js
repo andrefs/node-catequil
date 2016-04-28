@@ -9,16 +9,17 @@ import {
 } from '../constants';
 
 const initialState = Immutable.fromJS({
-    token: null
+    token: null,
+    user:  null
 });
 
 export default handleActions({
-    [AUTH_LOAD_FINISHED] : (state, {payload: {token}}) => state.merge({token}),
-    [AUTH_LOGIN_REQUEST] : (state)                     => state.set('isLoggingIn', true),
-    [AUTH_LOGIN_SUCCESS] : (state, {payload: {token}}) => {
+    [AUTH_LOAD_FINISHED] : (state, {payload}) => state.merge(payload),
+    [AUTH_LOGIN_REQUEST] : (state)            => state.set('isLoggingIn', true),
+    [AUTH_LOGIN_SUCCESS] : (state, {payload}) => {
         return state.merge({
+            ...payload,
             isLoggingIn: false,
-            token,
             error: null
         });
     },
@@ -29,7 +30,7 @@ export default handleActions({
             error: error.message
         });
     },
-    [AUTH_LOGOUT_SUCCESS]: (state) => state.set('token', null)
+    [AUTH_LOGOUT_SUCCESS]: (state) => state.merge({token: null, user:null})
 }, initialState);
 
 export const stateKey = 'auth';

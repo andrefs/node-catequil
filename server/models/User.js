@@ -5,6 +5,11 @@ import listPlugin from 'mongoose-list';
 mongoose.plugin(listPlugin, {searchFields:['participants']});
 
 var UserSchema = mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    photo: String,
     local: {
         username:{
             type   : String,

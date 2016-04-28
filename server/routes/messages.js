@@ -13,12 +13,16 @@ module.exports = function(app){
     // CRUD
     app.route('/api/messages')
     .get(function(req, res){
-        const start =  0;
-        const limit = 10;
-        const populate = 'author';
-        Message.list({start, limit,populate}, function(err, count, results){
+        const offset     = 0;
+        const limit      = 10;
+        const lean       = true;
+        const leanWithId = true;
+        const sort       = '-sentAt';
+        const populate   = {path:'author', select: '_id username'};
+        const select     = '_id text author channel sentAt';
+        Message.paginate({},{offset, limit, sort, populate, lean, leanWithId, select}, function(err, result){
             if(err){ res.send(err); }
-            res.json(results);
+            res.json(result.docs);
         });
     })
     .post(function(req, res){
@@ -36,17 +40,19 @@ module.exports = function(app){
 
     app.route('/api/messages/:channelID')
     .get(function(req, res){
-        const start =  0;
-        const limit = 50;
-        const find = {
+        const offset     = 0;
+        const limit      = 50;
+        const sort       = '-sentAt';
+        const lean       = true;
+        const leanWithId = true;
+        const populate   = {path:'author', select: '_id username'};
+        const select     = '_id text author channel sentAt';
+        const query      = {
             channel: mongoose.Types.ObjectId(req.params.channelID)
         };
-        const sort = '-sentAt'
-        const populate = 'author';
-        Message.list({start, limit, find, sort, populate}, function(err, count, results){
-            res.json(results);
+        Message.paginate(query, {offset, limit, sort, populate, lean, leanWithId, select}, function(err, result){
+            if(err){ res.send(err); }
+            res.json(result.docs);
         });
     });
-
-
 };

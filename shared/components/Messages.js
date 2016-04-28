@@ -5,7 +5,7 @@ import MessageItem from './MessageItem';
 
 class Messages extends React.Component {
     static propTypes = {
-        messages      : PropTypes.instanceOf(Immutable.Map).isRequired,
+        messages : PropTypes.instanceOf(Immutable.Map).isRequired,
     };
 
     render() {

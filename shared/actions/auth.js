@@ -49,9 +49,9 @@ export function login(data) {
             }
             return response.json();
         })
-        .then(({token}) => {
-            window.localStorage.setItem('token', token);
-            dispatch(loginSuccess({token}));
+        .then((payload) => {
+            window.localStorage.setItem('token', payload.token);
+            dispatch(loginSuccess(payload));
             dispatch(push('/chat'));
         })
         .catch((err) => {
