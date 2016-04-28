@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+import '../utils/fetch';
 import {createAction } from 'redux-actions';
 import {push} from 'react-router-redux';
 
@@ -9,11 +9,11 @@ import {
 } from '../constants';
 
 
-const fetchMessages = function(channelID) {
+const fetchMessages = function(channelID, token) {
     return (dispatch) => {
         dispatch(messagesRequest());
 
-        return fetch(`/api/messages/${channelID}`)
+        return fetch(`/api/messages/${channelID}`, token)
         .then(response => response.json())
         .then(messages => {
             var obj = {};

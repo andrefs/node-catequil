@@ -2,6 +2,7 @@ import bodyParser from 'body-parser';
 import config   from '../../config';
 import jwt from 'jwt-simple';
 import User from '../models/User';
+import mongoose from 'mongoose';
 
 module.exports = function(app, passport){
 
@@ -19,6 +20,14 @@ module.exports = function(app, passport){
         });
     });
 
+
+    app.route('/api/user')
+    .get(function(req, res){
+        User.findOne({_id: mongoose.Types.ObjectId(req.user.sub)}, '_id username', function(err, doc){
+            if(err){ res.send(err); }
+            res.send(doc);
+        });
+     });
 
     // Facebook
 
@@ -55,7 +64,13 @@ module.exports = function(app, passport){
         };
         let token = jwt.encode(claims, config.auth.jwt.secret);
         console.info(`User logged in with local-login: ${req.user.local.username}`);
-        res.json({token: token});
+        res.json({
+            token: token,
+            user: {
+                _id: req.user['_id'],
+                username: req.user.username
+            }
+        });
     });
 
 };

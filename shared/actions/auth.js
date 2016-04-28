@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+import '../utils/fetch';
 import {createAction } from 'redux-actions';
 import {push} from 'react-router-redux';
 import {
@@ -15,7 +15,19 @@ import {
 export function loadAuth() {
     return (dispatch) => {
         const token = window.localStorage.getItem('token');
-        dispatch(loadAuthFinished({token}));
+        fetch('/api/user', token)
+        .then(response => {
+            if(!response.ok){
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(user => {
+            dispatch(loadAuthFinished({token, user}));
+        })
+        .catch((err) => {
+            dispatch(push('/'));
+        });
     };
 };
 
@@ -23,7 +35,7 @@ export function login(data) {
     return (dispatch) => {
         dispatch(loginRequest(data));
 
-        fetch('/login', {
+        fetch('/login', null, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',

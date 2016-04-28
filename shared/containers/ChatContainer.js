@@ -4,7 +4,6 @@ import Chat        from '../components/Chat';
 import {fetchChannels,changeChannel} from '../actions/channels';
 import {fetchUsers} from '../actions/users';
 import {connect} from 'react-redux';
-import {fetchMessages} from '../actions/messages';
 import {logout} from '../actions/auth';
 import { bindActionCreators } from 'redux'
 
@@ -21,17 +20,17 @@ const socket = '';
 class ChatContainer extends Component {
 
     componentWillMount() {
-        const {dispatch} = this.props;
-        dispatch(fetchChannels());
-        dispatch(fetchUsers());
+        const {dispatch,token} = this.props;
+        dispatch(fetchChannels(token));
+        dispatch(fetchUsers(token));
     }
 
     changeActiveChannel(channel) {
-        const {dispatch} = this.props;
+        const {dispatch, token} = this.props;
 
         //socket.emit('leave channel', activeChannel);
         //socket.emit('join channel', channel);
-        dispatch(changeChannel(channel.toJS()));
+        dispatch(changeChannel(channel.toJS(),token));
     }
 
     render(){
@@ -45,7 +44,9 @@ function mapStateToProps(state) {
     return {
         channels: state.get('channels'),
         users: state.getIn(['users','list']),
-        messages: state.get('messages')
+        messages: state.get('messages'),
+        activeChannel: state.getIn(['channels','activeChannel']),
+        token: state.getIn(['auth','token'])
     }
 }
 

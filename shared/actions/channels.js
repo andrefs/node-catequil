@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+import '../utils/fetch';
 import {createAction } from 'redux-actions';
 import {push} from 'react-router-redux';
 import {fetchMessages} from './messages';
@@ -12,25 +12,28 @@ import {
 
 const setActiveChannel = createAction(SET_ACTIVE_CHANNEL);
 
-const fetchChannels = function() {
+const fetchChannels = function(token) {
     return (dispatch) => {
         dispatch(channelsRequest());
 
-        return fetch('/api/channels')
+        return fetch('/api/channels', token)
         .then(response => response.json())
         .then(channels => {
             let firstChannel = channels[0];
             dispatch(channelsSuccess({list:channels}));
-            dispatch(changeChannel(firstChannel));
+            dispatch(changeChannel(firstChannel, token));
         })
         .catch(error => {throw error});
     };
 };
 
-const changeChannel = function(channel){
+const changeChannel = function(channel, token){
+    if(!token){
+        console.log(new Error().stack);
+    }
     return (dispatch) => {
         dispatch(setActiveChannel(channel));
-        dispatch(fetchMessages(channel['_id']));
+        dispatch(fetchMessages(channel['_id'], token));
     };
 };
 

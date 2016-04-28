@@ -15,7 +15,8 @@ class Chat extends Component {
         users         : PropTypes.instanceOf(Immutable.List).isRequired,
         messages      : PropTypes.instanceOf(Immutable.Map).isRequired,
         changeChannel : PropTypes.func.isRequired,
-        logout        : PropTypes.func.isRequired
+        logout        : PropTypes.func.isRequired,
+        token         : PropTypes.string.isRequired,
     };
 
     handleLogout = (e) => {
@@ -24,7 +25,7 @@ class Chat extends Component {
     }
 
     render(){
-        const {socket, channels, users, messages, dispatch, changeChannel} = this.props;
+        const {socket, channels, users, messages, dispatch, changeChannel, token} = this.props;
         const activeChannel = channels.getIn(['activeChannel'])
         const numParticipants = activeChannel.get('participants') ? activeChannel.get('participants').size : 0;
 
@@ -37,7 +38,7 @@ class Chat extends Component {
                         <h2>Channels</h2>
                         <ul>
                             {channels.get('list').map(channel =>
-                                <li key={channel.get('name')} onClick={() => changeChannel(channel)} >
+                                <li key={channel.get('name')} onClick={() => changeChannel(channel, token)} >
                                     {channel.get('name')}
                                 </li>
                             )}
@@ -82,7 +83,7 @@ class Chat extends Component {
 
                         <form style={{height:'100%'}} >
                         <FormGroup style={{height:'100%',display: 'block'}} controlId="formControlsTextarea" bsSize="large">
-                            <FormControl style={{height:'100%', borderRadius:0}} componentClass="textarea" rows="2" placeholder="Enter your message..." ref="message" />
+                            <textarea placeholder="Enter your message..." id="formControlsTextarea" className="form-control" style={{height: '100%', borderRadius: 0}} autofocus={true} ref="message" onKeyDown={::this.handleSubmit} ></textarea>
                         </FormGroup>
                         </form>
                     </Col>

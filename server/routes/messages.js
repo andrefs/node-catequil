@@ -17,6 +17,7 @@ module.exports = function(app){
         const limit = 10;
         const populate = 'author';
         Message.list({start, limit,populate}, function(err, count, results){
+            if(err){ res.send(err); }
             res.json(results);
         });
     })

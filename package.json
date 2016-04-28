@@ -49,6 +49,7 @@
     "body-parser": "1.15.0",
     "bootstrap": "3.3.6",
     "express": "4.13.4",
+    "express-jwt": "3.3.0",
     "hbs": "4.0.0",
     "immutable": "3.8.1",
     "jquery": "2.2.3",

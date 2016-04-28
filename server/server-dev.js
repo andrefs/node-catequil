@@ -11,6 +11,8 @@ import passport from './passport';
 import {Provider} from 'react-redux';
 import configStore from '../shared/store/configStore';
 import {syncHistoryWithStore}  from 'react-router-redux'
+import jwt from 'express-jwt';
+
 
 let app = new express();
 
@@ -35,6 +37,7 @@ app.use(logger('dev'));                         // logger
 app.set('views', './server/views');             // view engine setup
 app.set('view engine', 'hbs');                  // views folder
 app.use(express.static(__dirname+'/../public/')); // static files path
+app.use(jwt({secret: config.auth.jwt.secret}).unless({path: ['/', '/login', '/chat']}));
 
 // routing
 
