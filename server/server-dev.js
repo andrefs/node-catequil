@@ -12,9 +12,26 @@ import {Provider} from 'react-redux';
 import configStore from '../shared/store/configStore';
 import {syncHistoryWithStore}  from 'react-router-redux'
 import jwt from 'express-jwt';
-
+import socketioJwt from 'socketio-jwt';
 
 let app = new express();
+
+// Sockets
+let http = require('http').Server(app);
+let io     = require('socket.io')(http,{path:'/sockets/chat/'});
+
+// set authorization for socket.io
+io.sockets
+    .on('connection', socketioJwt.authorize({
+        secret: config.auth.jwt.secret,
+        timeout: 15*1000 // 15 seconds to send the authentication message
+    }))
+    .on('authenticated', function(io) {
+        //this socket is authenticated, we are good to handle more events from it.
+        require('./sockets')(io);
+    });
+
+
 
 // Database connection
 
@@ -33,11 +50,18 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 // Settings, middleware etc
 
-app.use(logger('dev'));                         // logger
-app.set('views', './server/views');             // view engine setup
-app.set('view engine', 'hbs');                  // views folder
+app.use(logger('dev'));                           // logger
+app.set('views', './server/views');               // view engine setup
+app.set('view engine', 'hbs');                    // views folder
 app.use(express.static(__dirname+'/../public/')); // static files path
-app.use(jwt({secret: config.auth.jwt.secret}).unless({path: ['/', '/login', '/chat']}));
+var unauthPaths = [
+    '/',
+    '/login',
+    '/chat',
+    '/favicon.ico',
+    '/sockets/chat'
+];
+app.use(jwt({secret: config.auth.jwt.secret}).unless({path: unauthPaths}));
 
 // routing
 
@@ -106,7 +130,7 @@ async.series([
     function(next){ db.once('open', next); },
     function(next){
         console.info(`Connected to MongoDB database ${mongo_uri}`);
-        app.listen(port,'0.0.0.0', next);
+        http.listen(port,'0.0.0.0', next);
     }],
     function(err){
         if(err){

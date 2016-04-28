@@ -23,6 +23,9 @@ module.exports = function(app, passport){
 
     app.route('/api/user')
     .get(function(req, res){
+        if(!req.user){
+            res.send({});
+        }
         User.findOne({_id: mongoose.Types.ObjectId(req.user.sub)}, '_id username', function(err, doc){
             if(err){ res.send(err); }
             res.send(doc);

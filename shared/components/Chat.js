@@ -19,14 +19,18 @@ class Chat extends Component {
         token         : PropTypes.string.isRequired,
     };
 
+    componentDidMount() {
+        const {socket, user, dispatch} = this.props;
+    }
+
     handleLogout = (e) => {
         e.preventDefault();
         this.props.logout();
     }
 
     handleSubmit = (e) => {
-        const {activeChannel,token,user} = this.props;
         if(e.which === 13){
+            const {activeChannel,token,user,socket} = this.props;
             e.preventDefault();
             const text = this.refs.message.value.trim();
             const activeChannelID = activeChannel.get('_id');
@@ -39,7 +43,7 @@ class Chat extends Component {
                 sentAt: new Date().toISOString()
             };
 
-            this.props.sendMessage(newMessage);
+            this.props.sendMessage(newMessage, socket);
 
             this.refs.message.value = '';
         }

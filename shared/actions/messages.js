@@ -25,11 +25,19 @@ const fetchMessages = function(channelID, token) {
     };
 };
 
-const sendMessage = function(message){
+const sendMessage = function(message, socket){
+    return (dispatch) => {
+        dispatch(addMessage(message));
+        socket.emit('new message', message);
+    };
+};
+
+const receiveMessage = function(message){
     return (dispatch) => {
         dispatch(addMessage(message));
     };
 };
+
 
 export {fetchMessages, sendMessage};
 

@@ -5,25 +5,33 @@ import {fetchChannels,changeChannel} from '../actions/channels';
 import {fetchUsers} from '../actions/users';
 import {connect} from 'react-redux';
 import {logout} from '../actions/auth';
-import {sendMessage} from '../actions/messages';
-import { bindActionCreators } from 'redux'
+import {sendMessage,receiveMessage} from '../actions/messages';
+import {bindActionCreators} from 'redux'
+import io from 'socket.io-client';
 
-//import io from 'socket.io-client';
-//const socket = io('', { path: '/api/chat' });
-const socket = '';
-
+let socket;
 
 @connect(
     mapStateToProps,
     mapDispatchToProps
 )
-
 class ChatContainer extends Component {
 
     componentWillMount() {
         const {dispatch,token} = this.props;
         dispatch(fetchChannels(token));
         dispatch(fetchUsers(token));
+
+        socket = io('', {path:'/sockets/chat'});
+        socket.on('connect', function (){
+            socket
+                .on('authenticated', function () {
+                    socket.on('new channel message', msg =>
+                        dispatch(receiveMessage(msg))
+                    );
+                })
+                .emit('authenticate', {token});
+        });
     }
 
     changeActiveChannel(channel) {
