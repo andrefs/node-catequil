@@ -3,7 +3,7 @@ import {
     CHANNELS_FETCH_REQUEST,
     CHANNELS_FETCH_SUCCESS,
     CHANNELS_FETCH_FAILURE,
-    CHANGE_CHANNEL
+    SET_ACTIVE_CHANNEL
 } from '../constants';
 
 const initialState = Immutable.fromJS({
@@ -18,7 +18,7 @@ export default function channels(state = initialState, action) {
             list: action.payload.list,
             activeChannel: action.payload.list[0]
         });
-    case CHANGE_CHANNEL:
+    case SET_ACTIVE_CHANNEL:
         return state.merge({
             activeChannel: action.payload
         });

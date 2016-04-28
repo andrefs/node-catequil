@@ -20,6 +20,7 @@ passport.use('local-register', new LocalStrategy(
                 let user = new User();
                 user.local.username = username;
                 user.local.password = User.calcPasswordHash(password);
+                user.username = username;
                 user.save(function(err){
                     if(err){ throw err; }
                     return cb(null, user);
@@ -72,9 +73,11 @@ passport.use(new FacebookStrategy({
                 var userObj = {
                     'facebook.id': profile.id,
                     'facebook.username': profile.displayName,
+                    'username': profile.displayName
                 };
                 if(profile.photos && profile.photos.length){
                     userObj['facebook.photo'] = profile.photos[0].value;
+                    userObj['photo'] = profile.photos[0].value;
                 }
                 var newUser = new User(userObj);
                 newUser.save(function(err, user) {

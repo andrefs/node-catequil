@@ -36,55 +36,58 @@ class Login extends React.Component {
 
     render(){
         return (
-            <div className="vertical-center">
-            <Col md={6} mdOffset={3} sm={8} smOffset={2}>
-                <p className="login-intro h2 text-center">Login to Catequil chat</p>
+            <div>
+                <div style={{height: '60px'}} />
+                <div className="vertical-center">
+                    <Col md={6} mdOffset={3} sm={8} smOffset={2}>
+                        <p className="login-intro h2 text-center">Login to Catequil chat</p>
 
-                <Panel header={panelHeader} bsStyle="info" >
-                    <form onSubmit={this.onSubmit} >
-                        <FormGroup controlId="formControlsEmail" bsSize="large">
+                        <Panel header={panelHeader} bsStyle="info" >
+                            <form onSubmit={this.onSubmit} >
+                                <FormGroup controlId="formControlsEmail" bsSize="large">
 
-                            {/* Not using <FormControl> from react-bootstrap until I figure out how to getValue from it */}
-                            <span className="input-group">
-                                <span className="input-group-addon">
-                                    <span className="glyphicon glyphicon-user"></span>
-                                </span>
-                                <input type="email" placeholder="you@domain.com" className="form-control" ref="email" />
-                            </span>
+                                    {/* Not using <FormControl> from react-bootstrap until I figure out how to getValue from it */}
+                                    <span className="input-group">
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-user"></span>
+                                        </span>
+                                        <input type="email" placeholder="you@domain.com" className="form-control" ref="email" />
+                                    </span>
 
-                        </FormGroup>
-                        <FormGroup controlId="formControlsPassword" bsSize="large">
+                                </FormGroup>
+                                <FormGroup controlId="formControlsPassword" bsSize="large">
 
-                            {/* Not using <FormControl> from react-bootstrap until I figure out how to getValue from it */}
-                            <span className="input-group">
-                                <span className="input-group-addon">
-                                    <span className="glyphicon glyphicon-lock"></span>
-                                </span>
-                                <input type="password" placeholder="password" id="formControlsPassword" className="form-control" ref="password"/>
-                            </span>
+                                    {/* Not using <FormControl> from react-bootstrap until I figure out how to getValue from it */}
+                                    <span className="input-group">
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-lock"></span>
+                                        </span>
+                                        <input type="password" placeholder="password" id="formControlsPassword" className="form-control" ref="password"/>
+                                    </span>
 
-                        </FormGroup>
+                                </FormGroup>
 
-                        <FormGroup>
-                            <InputGroup>
-                                <ButtonToolbar>
-                                    <Button bsStyle="success" bsSize="large" type="submit">Login</Button>
-                                    <Button bsStyle="primary" bsSize="large" href="/auth/facebook" >Login with Facebook</Button>
-                                </ButtonToolbar>
-                            </InputGroup>
-                        </FormGroup>
+                                <FormGroup>
+                                    <InputGroup>
+                                        <ButtonToolbar>
+                                            <Button bsStyle="success" bsSize="large" type="submit">Login</Button>
+                                            <Button bsStyle="primary" bsSize="large" href="/auth/facebook" >Login with Facebook</Button>
+                                        </ButtonToolbar>
+                                    </InputGroup>
+                                </FormGroup>
 
-                        <FormGroup>
-                            <Col md={12}>
-                                Don't have an account? <Link to={"/register"}>Register here!</Link>
-                            </Col>
-                            <Col md={12}>
-                                <Link to={"/chat"}>Chat</Link>
-                            </Col>
-                        </FormGroup>
-                    </form>
-                </Panel>
-            </Col>
+                                <FormGroup>
+                                    <Col md={12}>
+                                        Don't have an account? <Link to={"/register"}>Register here!</Link>
+                                    </Col>
+                                    <Col md={12}>
+                                        <Link to={"/chat"}>Chat</Link>
+                                    </Col>
+                                </FormGroup>
+                            </form>
+                        </Panel>
+                    </Col>
+                </div>
             </div>
         );
     }

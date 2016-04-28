@@ -5,10 +5,11 @@ import Immutable from 'immutable';
 import thunk from 'redux-thunk';
 
 import {combineReducers} from 'redux-immutable';
-import routerReducer from '../reducers/RouterReducer';
-import usersReducer from '../reducers/usersReducer';
-import authReducer from '../reducers/authReducer';
-import channels from '../reducers/channels';
+import routerReducer     from '../reducers/RouterReducer';
+import usersReducer      from '../reducers/usersReducer';
+import authReducer       from '../reducers/authReducer';
+import channels          from '../reducers/channels';
+import messages          from '../reducers/messages';
 
 let logger = createLogger({
     //actionTransformer: state => JSON.stringify(state, null, 4),
@@ -23,6 +24,7 @@ export default function configStore(history, initialState = defaultInitialState)
         auth    : authReducer,
         channels,
         users: usersReducer,
+        messages
     });
 
     const store = createStore(
