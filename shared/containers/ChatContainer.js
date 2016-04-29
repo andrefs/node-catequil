@@ -18,13 +18,12 @@ class ChatContainer extends Component {
         const {dispatch,token} = this.props;
 
         dispatch(fetchChannels(token));
-        dispatch(receiveMessage(msg))
         dispatch(fetchUsers(token));
     }
 
     changeActiveChannel(newChannel) {
         const {dispatch, token, activeChannel} = this.props;
-        dispatch(changeChannel(activeChannel.toJS(), newChannel.toJS(),token));
+        dispatch(changeChannel(newChannel.toJS(),token));
     }
 
     render(){

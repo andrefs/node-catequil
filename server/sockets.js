@@ -9,7 +9,7 @@ module.exports = function(io){
         message.text    = msg.text;
         message.sentAt  = new Date(msg.sentAt);
         message.save(function(err){
-            io.broadcast.to(msg.channelID).emit('new channel message', msg);
+            io.broadcast.to(msg.channel).emit('new channel message', msg);
         });
     });
 
