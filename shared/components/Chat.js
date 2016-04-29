@@ -20,7 +20,7 @@ class Chat extends Component {
     };
 
     componentDidMount() {
-        const {socket, user, dispatch} = this.props;
+        const {user, dispatch} = this.props;
     }
 
     handleLogout = (e) => {
@@ -30,7 +30,7 @@ class Chat extends Component {
 
     handleSubmit = (e) => {
         if(e.which === 13){
-            const {activeChannel,token,user,socket} = this.props;
+            const {activeChannel,token,user} = this.props;
             e.preventDefault();
             const text = this.refs.message.value.trim();
             const activeChannelID = activeChannel.get('_id');
@@ -43,7 +43,7 @@ class Chat extends Component {
                 sentAt: new Date().toISOString()
             };
 
-            this.props.sendMessage(newMessage, socket);
+            this.props.sendMessage(newMessage);
 
             this.refs.message.value = '';
         }
@@ -51,8 +51,7 @@ class Chat extends Component {
 
 
     render(){
-        const {socket, channels, users, messages, dispatch, changeChannel, token} = this.props;
-        const activeChannel = channels.getIn(['activeChannel'])
+        const {channels, users, messages, dispatch, activeChannel, changeChannel, token} = this.props;
         const numParticipants = activeChannel.get('participants') ? activeChannel.get('participants').size : 0;
 
         return (

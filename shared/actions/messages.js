@@ -28,7 +28,6 @@ const fetchMessages = function(channelID, token) {
 const sendMessage = function(message, socket){
     return (dispatch) => {
         dispatch(addMessage(message));
-        socket.emit('new message', message);
     };
 };
 

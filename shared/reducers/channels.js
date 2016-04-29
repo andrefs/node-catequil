@@ -15,8 +15,7 @@ export default function channels(state = initialState, action) {
     switch (action.type) {
     case CHANNELS_FETCH_SUCCESS:
         return state.merge({
-            list: action.payload.list,
-            activeChannel: action.payload.list[0]
+            list: action.payload.list
         });
     case SET_ACTIVE_CHANNEL:
         return state.merge({

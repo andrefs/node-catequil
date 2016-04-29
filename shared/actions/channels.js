@@ -27,13 +27,10 @@ const fetchChannels = function(token) {
     };
 };
 
-const changeChannel = function(channel, token){
-    if(!token){
-        console.log(new Error().stack);
-    }
+const changeChannel = function(newChannel, token){
     return (dispatch) => {
-        dispatch(setActiveChannel(channel));
-        dispatch(fetchMessages(channel['_id'], token));
+        dispatch(setActiveChannel(newChannel));
+        dispatch(fetchMessages(newChannel._id, token));
     };
 };
 

@@ -3,6 +3,7 @@ import createLogger from 'redux-logger';
 import {routerMiddleware} from 'react-router-redux'
 import Immutable from 'immutable';
 import thunk from 'redux-thunk';
+import {socketsMiddleware} from '../middlewares/sockets';
 
 import {combineReducers} from 'redux-immutable';
 import routerReducer     from '../reducers/RouterReducer';
@@ -33,6 +34,7 @@ export default function configStore(history, initialState = defaultInitialState)
         compose(
             applyMiddleware(thunk),
             applyMiddleware(routerMiddleware(history)),
+            applyMiddleware(socketsMiddleware),
             applyMiddleware(logger)
         )
     )
