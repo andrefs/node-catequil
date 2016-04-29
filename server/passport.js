@@ -9,7 +9,7 @@ import config from '../config';
 passport.use('local-register', new LocalStrategy(
     {usernameField: 'email'},
     function(username, password, cb){
-        User.findOne({'local.username':username},function(err,user){
+        User.findOne({'username':username},function(err,user){
             if(err){ return cb(err); }
 
             // Check if user already exists
@@ -18,9 +18,9 @@ passport.use('local-register', new LocalStrategy(
             // Create new user
             else {
                 let user = new User();
+                user.username = username;
                 user.local.username = username;
                 user.local.password = User.calcPasswordHash(password);
-                user.username = username;
                 user.save(function(err){
                     if(err){ throw err; }
                     return cb(null, user);

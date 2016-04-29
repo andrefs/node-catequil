@@ -15,19 +15,21 @@ import {
 export function loadAuth() {
     return (dispatch) => {
         const token = window.localStorage.getItem('token');
-        fetch('/api/user', token)
-        .then(response => {
-            if(!response.ok){
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then(user => {
-            dispatch(loadAuthFinished({token, user}));
-        })
-        .catch((err) => {
-            dispatch(push('/'));
-        });
+        if(token){
+            fetch('/api/user', token)
+            .then(response => {
+                if(!response.ok){
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then(user => {
+                dispatch(loadAuthFinished({token, user}));
+            })
+            .catch((err) => {
+                dispatch(push('/'));
+            });
+        }
     };
 };
 
@@ -65,7 +67,7 @@ export function register(data) {
     return (dispatch) => {
         dispatch(registerRequest(data));
 
-        fetch('/register', {
+        fetch('/register', null, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -77,11 +79,11 @@ export function register(data) {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
-            return response.text();
+            return response.json();
         })
-        .then((token) => {
-            window.localStorage.setItem('token', token);
-            dispatch(registerSuccess({token}));
+        .then((payload) => {
+            window.localStorage.setItem('token', payload.token);
+            dispatch(registerSuccess(payload));
             dispatch(push('/chat'));
         })
         .catch((err) => {

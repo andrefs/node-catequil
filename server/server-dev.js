@@ -57,9 +57,12 @@ app.use(express.static(__dirname+'/../public/')); // static files path
 var unauthPaths = [
     '/',
     '/login',
+    '/register',
     '/chat',
     '/favicon.ico',
-    '/sockets/chat'
+    '/sockets/chat',
+    '/auth/facebook',
+    '/auth/facebook/callback'
 ];
 app.use(jwt({secret: config.auth.jwt.secret}).unless({path: unauthPaths}));
 

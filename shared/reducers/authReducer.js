@@ -5,6 +5,9 @@ import {
   AUTH_LOGIN_REQUEST,
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGIN_FAILURE,
+  AUTH_REGISTER_REQUEST,
+  AUTH_REGISTER_SUCCESS,
+  AUTH_REGISTER_FAILURE,
   AUTH_LOGOUT_SUCCESS
 } from '../constants';
 
@@ -17,6 +20,13 @@ export default handleActions({
     [AUTH_LOAD_FINISHED] : (state, {payload}) => state.merge(payload),
     [AUTH_LOGIN_REQUEST] : (state)            => state.set('isLoggingIn', true),
     [AUTH_LOGIN_SUCCESS] : (state, {payload}) => {
+        return state.merge({
+            ...payload,
+            isLoggingIn: false,
+            error: null
+        });
+    },
+    [AUTH_REGISTER_SUCCESS] : (state, {payload}) => {
         return state.merge({
             ...payload,
             isLoggingIn: false,
