@@ -20,6 +20,7 @@ class Messages extends React.Component {
 
         return (
             <Col md={10} style={{position:'fixed',  top:'51px', bottom:'100px', right:0, overflowX:'hidden'}} ref="msgDiv">
+            <div className="ml-top-padding"></div>
             {channelMessages.map(message =>
                 <MessageItem message={message} key={message.get('_id')} />
             )}

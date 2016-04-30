@@ -57,24 +57,32 @@ class Chat extends Component {
         return (
             <div style={{padding:0, width:'100vw', height:'100vh'}}>
                 {/* Chat sidebar */}
-                <Col md={2} style={{height:'100%',borderRight: '1px solid rgb(158, 158, 166)', display:'table-cell'}} >
+                <Col className="sidebar" md={2} style={{height:'100%', display:'table-cell'}} >
                     {/* Channel list */}
-                    <div>
-                        <h2>Channels</h2>
-                        <ul>
+                    <div className="section">
+                        <p className="h3 sidebar-header">
+                            <span>Channels</span>
+                            <a href="#"><span onClick={this.createChannel} style={{float:'right'}} className="glyphicon glyphicon-plus"></span></a>
+                        </p>
+                        <ul className="sidebar-list">
                             {channels.get('list').map(channel =>
-                                <li key={channel.get('name')} onClick={() => changeChannel(channel, token)} >
+                                <li className="channel" key={channel.get('name')} onClick={() => changeChannel(channel, token)} >
                                     <a href="#">{channel.get('name')}</a>
                                 </li>
                             )}
+
                         </ul>
                     </div>
-                    <div>
+                    <div className="section">
                         {/* Users list */}
-                        <h2>Users</h2>
-                        <ul>
+                        <p className="h3 sidebar-header">
+                            <span>Users</span>
+                        </p>
+                        <ul className="sidebar-list">
                             {users.map(user =>
-                                <li key={user.get('_id')} >{user.get('username')}</li>
+                                <li key={user.get('_id')} >
+                                    <a href="#">{user.get('username')}</a>
+                                </li>
                             )}
                         </ul>
                     </div>
@@ -84,7 +92,7 @@ class Chat extends Component {
                     <Col md={10} style={{position:'fixed', top:0}}>
 
                         {/* Nav bar */}
-                        <nav style={{position: 'relative'}} className="navbar navbar-default navbar-fixed-top navbar-inverse">
+                        <nav style={{position: 'relative'}} className="navbar navbar-fixed-top">
                             <Navbar.Header>
                                 <Navbar.Brand>
                                     <a href="#">{activeChannel.get('name')}</a>

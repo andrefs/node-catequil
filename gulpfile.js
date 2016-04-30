@@ -14,6 +14,8 @@ var browserify   = require('browserify');
 var watchify     = require('watchify');
 var uglify       = require('gulp-uglify');
 var sourcemaps   = require('gulp-sourcemaps');
+var cssimport = require("gulp-cssimport");
+
 
 var production = process.env.NODE_ENV === 'production';
 
@@ -113,16 +115,39 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
 gulp.task('styles', function() {
     return gulp.src('client/stylesheets/main.less')
         .pipe(plumber())
-        .pipe(less())
+        .pipe(less().on('error', function(err){
+            console.log(err);
+            this.emit('end');
+        }))
         .pipe(autoprefixer())
+        .pipe(cssimport({}))
         .pipe(gulpif(production, cssmin()))
         .pipe(gulp.dest('public/css'));
 });
 
 gulp.task('watch', function() {
     gulp.watch('client/stylesheets/main.less', ['styles']);
+    gulp.watch('node_modules/source-sans-pro/*/SourceSansPro-Regular*', ['fonts']);
+    gulp.watch('node_modules/source-sans-pro/**/SourceSansPro-Bold*', ['fonts']);
+    gulp.watch('node_modules/source-sans-pro/**/SourceSansPro-It*', ['fonts']);
+    gulp.watch('node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.*', ['bs-fonts']);
 });
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Compile fonts
+ |--------------------------------------------------------------------------
+ */
+
+gulp.task('fonts', function() {
+    return gulp.src([
+        'node_modules/source-sans-pro/**/SourceSansPro-Regular*',
+        'node_modules/source-sans-pro/**/SourceSansPro-Bold*',
+        'node_modules/source-sans-pro/**/SourceSansPro-It*',
+    ])
+    .pipe(gulp.dest('public/fonts'));
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -135,10 +160,7 @@ gulp.task('bs-fonts', function() {
     .pipe(gulp.dest('public/fonts'));
 });
 
-gulp.task('watch', function() {
-    gulp.watch('node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.*', ['bs-fonts'])
-});
 
+gulp.task('default', ['bs-fonts','fonts','styles', 'vendor', 'browserify-watch', 'watch']);
+gulp.task('build', ['bs-fonts','fonts','styles', 'vendor', 'browserify']);
 
-gulp.task('default', ['bs-fonts','styles', 'vendor', 'browserify-watch', 'watch']);
-gulp.task('build', ['bs-fonts','styles', 'vendor', 'browserify']);

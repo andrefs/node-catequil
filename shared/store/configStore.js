@@ -35,7 +35,7 @@ export default function configStore(history, initialState = defaultInitialState)
             applyMiddleware(thunk),
             applyMiddleware(routerMiddleware(history)),
             applyMiddleware(socketsMiddleware),
-            applyMiddleware(logger)
+            applyMiddleware(logger),
         )
     )
 

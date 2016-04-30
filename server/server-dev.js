@@ -56,6 +56,7 @@ app.set('view engine', 'hbs');                    // views folder
 app.use(express.static(__dirname+'/../public/')); // static files path
 var unauthPaths = [
     '/',
+    '/fonts',
     '/login',
     '/register',
     '/chat',

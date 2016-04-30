@@ -1,7 +1,11 @@
 @import '../../node_modules/bootstrap/less/bootstrap';
 
+@import 'source-sans-pro.css';
+
 html, body, #app {
     height:100%;
+    background-color: #EEFCFD;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 .vertical-center {
@@ -11,4 +15,73 @@ html, body, #app {
 
     display: flex;
     align-items: center;
+}
+
+.sidebar {
+    padding: 0;
+
+    background-color: #003c41;
+    /*background-color: #056C75;*/
+}
+
+.sidebar .section {
+}
+
+.h3.sidebar-header {
+    padding: 15px;
+    margin: 0 0 10px 0;
+    /*color:  #99E02B;*/
+    color: #65A10A;
+    line-height: 25px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.sidebar-list {
+    list-style: none;
+    padding-left: 20px;
+    font-size: 17px;
+}
+
+.sidebar-list .channel {
+    font-size: 25px;
+}
+
+.sidebar-list li, .sidebar-list li a {
+    color: #EEFCFD;
+}
+
+
+.h3.sidebar-header .glyphicon {
+    font-size: 25px;
+}
+
+.ml-top-padding {
+    height: 30px;
+}
+
+.navbar {
+    background-color: #003c41;
+}
+
+.navbar-brand {
+    color: #65A10A;
+    padding: 0 15px;
+    font-size: 37px;
+    line-height: 53px;
+    font-weight: bold;
+    height: 50px;
+}
+
+.navbar-brand:hover {
+    color: #99E02B;
+}
+
+
+.h3.sidebar-header a {
+    color: #65A10A;
+}
+
+.h3.sidebar-header a:hover {
+    color: #99E02B;
 }
