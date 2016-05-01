@@ -13,10 +13,11 @@ module.exports = function(app, passport){
 
     app.route('/api/users')
     .get(function(req, res){
-        let start =  0;
-        let limit = 10;
-        User.list({start, limit}, function(err, count, results){
-            res.json(results);
+        let offset =  0;
+        let limit  = 10;
+        User.paginate({},{offset, limit}, function(err, result){
+            if(err){ res.send(err); }
+            res.json(result.docs);
         });
     });
 

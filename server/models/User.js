@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt-nodejs';
 import mongoose from 'mongoose';
-import listPlugin from 'mongoose-list';
+import pagPlugin from 'mongoose-paginate';
 
-mongoose.plugin(listPlugin, {searchFields:['participants']});
+mongoose.plugin(pagPlugin);
 
 var UserSchema = mongoose.Schema({
     username: {
