@@ -47,3 +47,14 @@ including:
 
 See `package.json` for more details.
 
+# Roadmap
+
+- [ ] Allow to create new chat rooms
+- [ ] Add room/conversation to sidebar when invited by someone
+- [ ] Fix mobile layout
+- [ ] Fix Facebook authentication
+- [ ] Add more authentication mechanisms
+- [ ] Implement user's profile view
+- [ ] Allow user to change profile details
+- [ ] Add new message visual clue for non-active channels
+
