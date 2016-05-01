@@ -14,5 +14,8 @@ module.exports = {
         jwt: {
             secret: 'Edit this string and keep it secret'
         }
+    },
+    users: {
+        defaultPhotoURL: '/img/user.png'
     }
 };

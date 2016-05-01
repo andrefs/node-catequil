@@ -1,5 +1,4 @@
 var gulp         = require('gulp');
-var sync         = require('gulp-npm-script-sync');
 var gutil        = require('gulp-util');
 var gulpif       = require('gulp-if');
 var autoprefixer = require('gulp-autoprefixer');

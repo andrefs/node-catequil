@@ -7,7 +7,7 @@
     "dev:static": "gulp",
     "dev:server": "nodemon server/server-entry.js",
     "prod:static": "gulp -- build",
-    "prod:server": "nodemon server/server-entry.js",
+    "prod:server": "NODE_ENV=production nodemon server/server-entry.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "gulp"
   },

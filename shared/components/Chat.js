@@ -91,7 +91,7 @@ class Chat extends Component {
                 </Col>
                 {/* Chat main area */}
                 <Col md={10} style={{height:'100%',padding:0, display:'table-cell',padding:0}} >
-                    <Col md={10} style={{position:'fixed', top:0}}>
+                    <Col md={10} style={{padding:0, position:'fixed', top:0}}>
 
                         {/* Nav bar */}
                         <nav style={{position: 'relative'}} className="navbar navbar-fixed-top">
@@ -105,7 +105,7 @@ class Chat extends Component {
                             </Navbar.Header>
                             <Navbar.Collapse>
                                 <Navbar.Text pullLeft>{numParticipants} members</Navbar.Text>
-                                <Navbar.Form pullRight>
+                                <Navbar.Form pullRight style={{marginRight: '-10px'}} >
                                   <Button onClick={this.handleLogout}>Logout</Button>
                                 </Navbar.Form>
                             </Navbar.Collapse>
