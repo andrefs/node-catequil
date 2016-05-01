@@ -78,10 +78,7 @@ class Login extends React.Component {
 
                                 <FormGroup>
                                     <Col md={12}>
-                                        Don't have an account? <Link to={"/register"}>Register here!</Link>
-                                    </Col>
-                                    <Col md={12}>
-                                        <Link to={"/chat"}>Chat</Link>
+                                        Don't have an account? <Link to={"/register"} style={{fontWeight:'bold'}} >Register here!</Link>
                                     </Col>
                                 </FormGroup>
                             </form>
