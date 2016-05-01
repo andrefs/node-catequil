@@ -54,10 +54,13 @@ module.exports = function(app){
         const userID = req.user.sub;
         const otherID = req.params.otherID;
         const query = {
-            participants: [
-                mongoose.Types.ObjectId(userID),
-                mongoose.Types.ObjectId(otherID)
-            ]
+            isPrivate: true,
+            participants: {
+                $all: [
+                    mongoose.Types.ObjectId(userID),
+                    mongoose.Types.ObjectId(otherID)
+                ]
+            }
         };
 
         Channel.findOne(query, function(err, doc){
