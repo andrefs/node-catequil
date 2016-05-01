@@ -29,6 +29,12 @@ io.sockets
     .on('authenticated', function(io) {
         //this socket is authenticated, we are good to handle more events from it.
         require('./sockets')(io);
+
+        app.use(function(req, res, next) {
+            // inject referece to sockets server
+            req.io = io;
+            next();
+        });
     });
 
 
@@ -46,6 +52,9 @@ mongoose.connect(mongo_uri);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
+if(process.env.NODE_ENV !== 'production'){
+    mongoose.set('debug', true);
+}
 
 
 // Settings, middleware etc
@@ -70,7 +79,7 @@ app.use(jwt({secret: config.auth.jwt.secret}).unless({path: unauthPaths}));
 // routing
 
 require('./routes/users')(app, passport);
-require('./routes/channels')(app);
+require('./routes/channels')(app, io);
 require('./routes/messages')(app);
 
 app.get('/status', (req, res) => {

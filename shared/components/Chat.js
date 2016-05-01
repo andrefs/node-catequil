@@ -11,12 +11,13 @@ import Messages from './Messages';
 
 class Chat extends Component {
     static propTypes = {
-        channels      : PropTypes.instanceOf(Immutable.Map).isRequired,
-        users         : PropTypes.instanceOf(Immutable.List).isRequired,
-        messages      : PropTypes.instanceOf(Immutable.Map).isRequired,
-        changeChannel : PropTypes.func.isRequired,
-        logout        : PropTypes.func.isRequired,
-        token         : PropTypes.string.isRequired,
+        channels         : PropTypes.instanceOf(Immutable.Map).isRequired,
+        users            : PropTypes.instanceOf(Immutable.List).isRequired,
+        messages         : PropTypes.instanceOf(Immutable.Map).isRequired,
+        changeChannel    : PropTypes.func.isRequired,
+        newDirectMessage : PropTypes.func.isRequired,
+        logout           : PropTypes.func.isRequired,
+        token            : PropTypes.string.isRequired,
     };
 
     componentDidMount() {
@@ -50,8 +51,9 @@ class Chat extends Component {
     }
 
 
+
     render(){
-        const {channels, users, messages, dispatch, activeChannel, changeChannel, token} = this.props;
+        const {channels, users, messages, dispatch, activeChannel, changeChannel, token, newDirectMessage} = this.props;
         const numParticipants = activeChannel.get('participants') ? activeChannel.get('participants').size : 0;
 
         return (
@@ -66,7 +68,7 @@ class Chat extends Component {
                         </p>
                         <ul className="sidebar-list">
                             {channels.get('list').map(channel =>
-                                <li className="channel" key={channel.get('name')} onClick={() => changeChannel(channel, token)} >
+                                <li className={channel.get('_id') === activeChannel.get('_id') ? "channel active":"channel"} key={channel.get('name')} onClick={() => changeChannel(channel, token)} >
                                     <a href="#">{channel.get('name')}</a>
                                 </li>
                             )}
@@ -80,7 +82,7 @@ class Chat extends Component {
                         </p>
                         <ul className="sidebar-list">
                             {users.map(user =>
-                                <li key={user.get('_id')} >
+                                <li key={user.get('_id')} onClick={() => newDirectMessage(user.get('_id'))} >
                                     <a href="#">{user.get('username')}</a>
                                 </li>
                             )}

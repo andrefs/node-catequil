@@ -1,11 +1,11 @@
 import io from 'socket.io-client';
 import {addMessage} from '../actions/messages';
+import {addChannel,setActiveChannel,unsetActiveChannel} from '../actions/channels';
 import {
     AUTH_LOAD_FINISHED,
     SOCKET_SEND_MESSAGE,
     UNSET_ACTIVE_CHANNEL,
     SET_ACTIVE_CHANNEL,
-
 } from '../constants';
 
 
@@ -19,6 +19,13 @@ function _initSocket(token, store){
 
             socket.on('new channel message', msg => {
                 store.dispatch(addMessage(msg))
+            });
+
+            socket.on('new channel', channel => {
+                store.dispatch(addChannel);
+                store.dispatch(unsetActiveChannel);
+                store.dispatch(setActiveChannel(channel));
+
             });
 
         })

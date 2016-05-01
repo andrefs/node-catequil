@@ -1,15 +1,19 @@
 import bcrypt   from 'bcrypt-nodejs';
 import mongoose from 'mongoose';
-import listPlugin from 'mongoose-list';
+import pagPlugin from 'mongoose-paginate';
 import User     from './User';
 
-mongoose.plugin(listPlugin, {searchFields:['participants']});
+mongoose.plugin(pagPlugin);
 
 var ChannelSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
         unique: true
+    },
+    type: {
+        type: String,
+        enum: ['room', 'conversation']
     },
     topic: String,
     isPrivate: {

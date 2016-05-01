@@ -47,8 +47,25 @@ html, body, #app {
     font-size: 25px;
 }
 
-.sidebar-list li, .sidebar-list li a {
+.navbar a {
+    color: #65A10A
+}
+
+a, a:hover, a:focus {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+.sidebar-list > li:hover , .sidebar-list li a:hover {
     color: #EEFCFD;
+    text-decoration: none;
+}
+.sidebar-list > li, .sidebar-list > li a {
+    color: #368B92;
+}
+
+.sidebar-list > li:active, .sidebar-list > li.active a {
+    font-weight: bold;
 }
 
 

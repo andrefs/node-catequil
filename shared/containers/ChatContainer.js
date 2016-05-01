@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Col         from 'react-bootstrap/lib/Col';
 import Chat        from '../components/Chat';
-import {fetchChannels,changeChannel} from '../actions/channels';
+import {fetchChannels,changeChannel, openPrivate} from '../actions/channels';
 import {fetchUsers} from '../actions/users';
 import {connect} from 'react-redux';
 import {logout} from '../actions/auth';
@@ -26,9 +26,14 @@ class ChatContainer extends Component {
         dispatch(changeChannel(newChannel.toJS(),token));
     }
 
+    newDirectMessage(otherID){
+        const {user, dispatch, token} = this.props;
+        dispatch(openPrivate(token, otherID));
+    }
+
     render(){
         return (
-            <Chat changeChannel={::this.changeActiveChannel} {...this.props} />
+            <Chat changeChannel={::this.changeActiveChannel} newDirectMessage={::this.newDirectMessage} {...this.props} />
         );
     }
 }

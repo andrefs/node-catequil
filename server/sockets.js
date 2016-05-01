@@ -20,5 +20,6 @@ module.exports = function(io){
     io.on('leave channel', channelID => {
         io.leave(channelID);
     });
+
 };
 

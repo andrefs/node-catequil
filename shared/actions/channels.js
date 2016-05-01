@@ -9,14 +9,25 @@ import {
     CHANNELS_FETCH_FAILURE,
     SET_ACTIVE_CHANNEL,
     UNSET_ACTIVE_CHANNEL,
+    ADD_CHANNEL,
 } from '../constants';
 
+const openPrivate = function(token, otherID){
+    return dispatch => {
+        return fetch(`/api/channels/private/${otherID}`, token)
+        .then(response => response.json())
+        .then(channel => {
+            dispatch(changeChannel(channel, token));
+        })
+        .catch(error => {throw error});
+    };
+}
 
 const fetchChannels = function(token) {
     return (dispatch) => {
         dispatch(channelsRequest());
 
-        return fetch('/api/channels', token)
+        return fetch('/api/channels/rooms', token)
         .then(response => response.json())
         .then(channels => {
             let firstChannel = channels[0];
@@ -35,8 +46,9 @@ const changeChannel = function(newChannel, token){
     };
 };
 
-export {changeChannel, fetchChannels};
+export {changeChannel, fetchChannels, openPrivate};
 
+const addChannel         = createAction(ADD_CHANNEL);
 const setActiveChannel   = createAction(SET_ACTIVE_CHANNEL);
 const unsetActiveChannel = createAction(UNSET_ACTIVE_CHANNEL);
 const channelsSuccess    = createAction(CHANNELS_FETCH_SUCCESS);
