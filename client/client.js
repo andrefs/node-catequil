@@ -12,7 +12,8 @@ const initialState = Immutable.fromJS(window.__INITIAL_STATE__);
 
 
 const store = configStore(browserHistory,initialState);
-store.dispatch(loadAuth());              // try to load token from localStorage
+const redirectPath = store.getState().getIn(['routing', 'locationBeforeTransitions','query','redirect']);
+store.dispatch(loadAuth(redirectPath));              // try to load token from localStorage
 
 const history = syncHistoryWithStore(browserHistory, store, {
     selectLocationState: state => state.get('routing').toJS()

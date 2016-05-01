@@ -12,7 +12,7 @@ import {
   AUTH_LOGOUT_SUCCESS
 } from '../constants';
 
-export function loadAuth() {
+export function loadAuth(redirectPath) {
     return (dispatch) => {
         const token = window.localStorage.getItem('token');
         if(token){
@@ -25,6 +25,9 @@ export function loadAuth() {
             })
             .then(user => {
                 dispatch(loadAuthFinished({token, user}));
+                if(redirectPath){
+                    dispatch(push(redirectPath));
+                }
             })
             .catch((err) => {
                 dispatch(push('/'));
