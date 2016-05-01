@@ -6,7 +6,9 @@ class Navbar extends React.Component {
     return (
         <nav className="navbar navbar-fixed-top">
                 <div className="navbar-header">
-                    <Link className="navbar-brand" to={"#"}>Catequil</Link>
+                    <Link className="navbar-brand pull-left" to={"#"}>
+                        <div className="logo"></div> Catequil
+                    </Link>
                 </div>
         </nav>
     );

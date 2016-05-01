@@ -97,7 +97,9 @@ class Chat extends Component {
                         <nav style={{position: 'relative'}} className="navbar navbar-fixed-top">
                             <Navbar.Header>
                                 <Navbar.Brand>
-                                    <a href="#">{activeChannel.get('name')}</a>
+                                    <a href="#">
+                                        <div className="logo"></div>{activeChannel.get('name')}
+                                    </a>
                                 </Navbar.Brand>
                                 <Navbar.Toggle />
                             </Navbar.Header>

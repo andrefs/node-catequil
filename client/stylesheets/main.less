@@ -28,7 +28,7 @@ html, body, #app {
 }
 
 .h3.sidebar-header {
-    padding: 15px;
+    padding: 15px 15px 0 15px;
     margin: 0 0 10px 0;
     /*color:  #99E02B;*/
     color: #65A10A;
@@ -81,7 +81,7 @@ a, a:hover, a:focus {
     background-color: #003c41;
 }
 
-.navbar-brand {
+.navbar-brand, .navbar-brand:focus {
     color: #65A10A;
     padding: 0 15px;
     font-size: 37px;
@@ -101,4 +101,18 @@ a, a:hover, a:focus {
 
 .h3.sidebar-header a:hover {
     color: #99E02B;
+}
+
+.logo {
+    background-image: url(../img/catequil.png);
+    background-size: contain;
+    height: 41px;
+    width: 70px;
+    float: left;
+    margin: 5px 5px 5px 0;
+    background-repeat: no-repeat;
+}
+
+a:hover .logo {
+    background-image: url(../img/catequil_light.png);
 }

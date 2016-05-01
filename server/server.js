@@ -13,6 +13,7 @@ import configStore from '../shared/store/configStore';
 import {syncHistoryWithStore}  from 'react-router-redux'
 import jwt from 'express-jwt';
 import socketioJwt from 'socketio-jwt';
+import favicon from 'express-favicon';
 
 let app = new express();
 
@@ -62,9 +63,11 @@ if(process.env.NODE_ENV !== 'production'){
 app.use(logger('dev'));                           // logger
 app.set('views', './server/views');               // view engine setup
 app.set('view engine', 'hbs');                    // views folder
+app.use(favicon(__dirname+'/../public/favicon.ico'));
 app.use(express.static(__dirname+'/../public/')); // static files path
 var unauthPaths = [
     '/',
+    '/favicon.*',
     '/fonts',
     '/login',
     '/register',
