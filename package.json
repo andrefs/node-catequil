@@ -4,8 +4,10 @@
   "description": "A chat app written in Express + MongoDB + React + Redux",
   "main": "index.js",
   "scripts": {
+    "dev:initdb":"mongofixtures catequil_dev server/database/fixtures_dev.js",
     "dev:static": "gulp",
     "dev:server": "nodemon server/server-entry.js",
+    "prod:initdb":"mongofixtures catequil server/database/fixtures_prod.js",
     "prod:static": "gulp -- build",
     "prod:server": "NODE_ENV=production nodemon server/server-entry.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -65,6 +67,7 @@
     "passport": "0.3.2",
     "passport-facebook": "2.1.0",
     "passport-local": "1.0.0",
+    "pow-mongodb-fixtures": "0.13.0",
     "react": "15.0.1",
     "react-bootstrap": "0.29.1",
     "react-dom": "15.0.1",

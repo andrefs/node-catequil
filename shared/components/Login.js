@@ -71,7 +71,7 @@ class Login extends React.Component {
                                     <InputGroup>
                                         <ButtonToolbar>
                                             <Button bsStyle="success" bsSize="large" type="submit">Login</Button>
-                                            <Button bsStyle="primary" bsSize="large" href="/auth/facebook" >Login with Facebook</Button>
+                                            {/*<Button bsStyle="primary" bsSize="large" href="/auth/facebook" >Login with Facebook</Button>*/}
                                         </ButtonToolbar>
                                     </InputGroup>
                                 </FormGroup>

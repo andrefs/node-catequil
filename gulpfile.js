@@ -185,7 +185,6 @@ gulp.task('bs-fonts', function() {
     .pipe(gulp.dest('public/fonts'));
 });
 
-
 gulp.task('default', ['images','favicon','bs-fonts','fonts','styles', 'vendor', 'browserify-watch', 'watch']);
 gulp.task('build',   ['images','favicon','bs-fonts','fonts','styles', 'vendor', 'browserify']);
 

@@ -2,7 +2,9 @@ import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import {Strategy as FacebookStrategy} from 'passport-facebook';
 import User from './models/User';
+import Channel from './models/Channel';
 import config from '../config';
+import mongoose from 'mongoose';
 
 // User register
 
@@ -15,17 +17,27 @@ passport.use('local-register', new LocalStrategy(
             // Check if user already exists
             if(user){ return cb(null, false); }
 
-            // Create new user
-            else {
-                let user = new User();
-                user.username = username;
-                user.local.username = username;
-                user.local.password = User.calcPasswordHash(password);
-                user.save(function(err){
-                    if(err){ throw err; }
-                    return cb(null, user);
-                });
-            }
+                // Create new user
+                else {
+                    let user = new User();
+                    user.username = username;
+                    user.local.username = username;
+                    user.local.password = User.calcPasswordHash(password);
+                    user.save(function(err, user){
+                        if(err){ throw err; }
+
+                        // Add user to #general
+                        Channel.update({'name':'#general'}, {
+                            $addToSet: {
+                                participants: mongoose.Types.ObjectId(user._id)
+                            },
+                        },{},function(err, numAffected){
+
+                            if(err){ throw err; }
+                            return cb(null, user);
+                        });
+                    });
+                }
         });
     })
 );

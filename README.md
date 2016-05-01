@@ -49,6 +49,7 @@ See `package.json` for more details.
 
 # Roadmap
 
+- [ ] Add multiple default user images and randomize when registering
 - [ ] Allow to create new chat rooms
 - [ ] Add room/conversation to sidebar when invited by someone
 - [ ] Fix mobile layout
