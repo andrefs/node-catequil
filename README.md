@@ -24,7 +24,7 @@ and
 
 ### Production
 
-    npm run prod:build && nom run prod:server
+    npm run prod:initdb && npm run prod:build && nom run prod:server
 
 ## Dependencies
 
