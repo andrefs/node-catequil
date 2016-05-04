@@ -63,41 +63,43 @@ passport.use('local-login', new LocalStrategy(
     })
 );
 
-passport.use(new FacebookStrategy({
-        clientID     : config.facebook.clientID,
-        clientSecret : config.facebook.clientSecret,
-        callbackURL  : "http://" + config.server.host+':'+config.server.port + "/auth/facebook/callback",
-        profileFields: ['id', 'displayName', 'photos']
-    },
-    function(accessToken, refreshToken, profile, cb) {
-        //cookies.save('username', profile.displayName)
-        User.findOne({'facebook.id': profile.id}, function(err, user) {
-            // Error
-            if(err){ return cb(err); }
+if(config.facebook && config.facebook.clientID && config.facebook.clientSecret){
+    passport.use(new FacebookStrategy({
+            clientID     : config.facebook.clientID,
+            clientSecret : config.facebook.clientSecret,
+            callbackURL  : "http://" + config.server.host+':'+config.server.port + "/auth/facebook/callback",
+            profileFields: ['id', 'displayName', 'photos']
+        },
+        function(accessToken, refreshToken, profile, cb) {
+            //cookies.save('username', profile.displayName)
+            User.findOne({'facebook.id': profile.id}, function(err, user) {
+                // Error
+                if(err){ return cb(err); }
 
-            // Ok (user already existed)
-            if(!err && user !== null) {
-                return cb(null, user);
-            }
-
-            // Ok (new user)
-            else {
-                var userObj = {
-                    'facebook.id': profile.id,
-                    'facebook.username': profile.displayName,
-                    'username': profile.displayName
-                };
-                if(profile.photos && profile.photos.length){
-                    userObj['facebook.photo'] = profile.photos[0].value;
-                    userObj['photo'] = profile.photos[0].value;
+                // Ok (user already existed)
+                if(!err && user !== null) {
+                    return cb(null, user);
                 }
-                var newUser = new User(userObj);
-                newUser.save(function(err, user) {
-                    return cb(err, err ? null : user);
-                });
-            }
-        })
-    }
-));
+
+                // Ok (new user)
+                else {
+                    var userObj = {
+                        'facebook.id': profile.id,
+                        'facebook.username': profile.displayName,
+                        'username': profile.displayName
+                    };
+                    if(profile.photos && profile.photos.length){
+                        userObj['facebook.photo'] = profile.photos[0].value;
+                        userObj['photo'] = profile.photos[0].value;
+                    }
+                    var newUser = new User(userObj);
+                    newUser.save(function(err, user) {
+                        return cb(err, err ? null : user);
+                    });
+                }
+            })
+        }
+    ));
+}
 
 module.exports = passport;

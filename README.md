@@ -59,3 +59,7 @@ See `package.json` for more details.
 - [ ] Allow user to change profile details
 - [ ] Add new message visual clue for non-active channels
 
+
+## Bugs and stuff
+
+Open a GitHub issue or, preferably, send me a pull request.

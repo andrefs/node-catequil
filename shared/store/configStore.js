@@ -12,10 +12,6 @@ import authReducer       from '../reducers/authReducer';
 import channels          from '../reducers/channels';
 import messages          from '../reducers/messages';
 
-let logger = createLogger({
-    //actionTransformer: state => JSON.stringify(state, null, 4),
-    stateTransformer:  state => JSON.stringify(state.toJS(), null, 4)
-});
 
 const defaultInitialState = new Immutable.Map();
 
@@ -28,15 +24,24 @@ export default function configStore(history, initialState = defaultInitialState)
         messages
     });
 
+    let middlewares = [
+        thunk,
+        routerMiddleware(history),
+        socketsMiddleware,
+    ];
+
+    if(process.env.NODE_ENV === 'development'){
+        let logger = createLogger({
+            //actionTransformer: state => JSON.stringify(state, null, 4),
+            stateTransformer:  state => JSON.stringify(state.toJS(), null, 4)
+        });
+        middlewares.push(logger);
+    }
+
     const store = createStore(
         reducer,
         initialState,
-        compose(
-            applyMiddleware(thunk),
-            applyMiddleware(routerMiddleware(history)),
-            applyMiddleware(socketsMiddleware),
-            applyMiddleware(logger),
-        )
+        compose(applyMiddleware(...middlewares))
     )
 
     return store;

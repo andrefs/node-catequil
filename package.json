@@ -4,13 +4,13 @@
   "description": "A chat app written in Express + MongoDB + React + Redux",
   "main": "index.js",
   "scripts": {
-    "dev:initdb":"mongofixtures catequil_dev server/database/fixtures_dev.js",
+    "dev:initdb": "mongofixtures catequil_dev server/database/fixtures_dev.js",
     "dev:static": "gulp",
     "dev:server": "nodemon server/server-entry.js",
-    "prod:initdb":"mongofixtures catequil server/database/fixtures_prod.js",
+    "prod:initdb": "mongofixtures catequil server/database/fixtures_prod.js",
     "prod:static": "gulp -- build",
     "prod:server": "NODE_ENV=production nodemon server/server-entry.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register --require ./test/test_helper.js  --recursive",
     "gulp": "gulp"
   },
   "repository": {
@@ -89,6 +89,8 @@
     "babel-plugin-transform-class-properties": "6.6.0",
     "babelify": "7.2.0",
     "browserify": "13.0.0",
+    "chai": "3.5.0",
+    "chai-http": "2.0.1",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.0",
     "gulp-concat": "2.6.0",
@@ -99,6 +101,7 @@
     "gulp-sourcemaps": "2.0.0-alpha",
     "gulp-uglify": "1.5.3",
     "gulp-util": "3.0.7",
+    "mocha": "2.4.5",
     "nodemon": "1.9.1",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",

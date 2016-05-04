@@ -53,21 +53,22 @@ mongoose.connect(mongo_uri);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-if(process.env.NODE_ENV !== 'production'){
+if(process.env.NODE_ENV === 'development'){
     mongoose.set('debug', true);
 }
 
 
 // Settings, middleware etc
 
-app.use(logger('dev'));                           // logger
+if(process.env.NODE_ENV === 'development'){
+    app.use(logger('dev'));                       // logger
+}
 app.set('views', './server/views');               // view engine setup
 app.set('view engine', 'hbs');                    // views folder
 app.use(favicon(__dirname+'/../public/favicon.ico'));
 app.use(express.static(__dirname+'/../public/')); // static files path
 var unauthPaths = [
     '/',
-    '/favicon.*',
     '/fonts',
     '/login',
     '/register',
@@ -156,3 +157,5 @@ async.series([
         console.info(`Server running on http://localhost:${port}`);
     }
 );
+
+module.exports = app;
