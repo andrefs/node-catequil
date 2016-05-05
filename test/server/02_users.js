@@ -1,29 +1,15 @@
-import chai   from 'chai';
 import async  from 'async';
-import db     from '../server/db';
+import db     from '../../server/db';
 import request from 'supertest';
-import server from '../server/server';
-import User   from '../server/models/User';
-import Channel   from '../server/models/Channel';
-import Message   from '../server/models/Message';
+import server from '../../server/server';
+import User   from '../../server/models/User';
+import Channel   from '../../server/models/Channel';
+import Message   from '../../server/models/Message';
 import mongoose from 'mongoose';
-import config from '../config';
+import config from '../../config';
 import jwt from 'jwt-simple';
 
 let jwtSecret = config.auth.jwt.secret;
-let expect = chai.expect;
-
-before(function(done){
-    db.once('open', done);
-});
-
-after(function (done){
-    db.db.dropDatabase(function () {
-        db.close(function () {
-            done();
-        });
-    });
-});
 
 describe('Users Controllers', function() {
     const user = {

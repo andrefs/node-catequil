@@ -20,7 +20,7 @@ let app = new express();
 
 // Sockets
 let http = require('http').Server(app);
-let io     = require('socket.io')(http,{path:'/sockets/chat/'});
+let io   = require('socket.io')(http,{path:'/sockets/chat/'});
 
 // set authorization for socket.io
 io.sockets

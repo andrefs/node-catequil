@@ -27,8 +27,10 @@ module.exports = function(app){
             channel.isPrivate = req.body.isPrivate;
         }
         channel.save(function(err){
-            if(err){ return res.send(err); }
-            req.io.broadcast.emit('new channel', channel);
+            if(err){
+                return res.status(500).send(err);
+            }
+            if(req.io){ req.io.broadcast.emit('new channel', channel); }
             res.sendStatus(201);
         });
     });
@@ -88,8 +90,8 @@ module.exports = function(app){
                     ];
                     channel.save(function(err){
                         if(err){ res.send(err); }
-                        req.io.broadcast.emit('new channel', channel); // should send only to otherID
-                        res.send(201, channel);
+                        if(req.io){ req.io.broadcast.emit('new channel', channel); } // should send only to otherID
+                        res.status(201).send(channel);
                     });
                 });
             } else {
