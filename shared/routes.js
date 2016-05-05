@@ -1,16 +1,13 @@
-import React from 'react';
+import React             from 'react';
 import {Route, Redirect, IndexRoute} from 'react-router';
-import App      from './containers/App';
+import App               from './containers/App';
 import ChatContainer     from './containers/ChatContainer';
-import Start    from './containers/Start';
+import Start             from './containers/Start';
 import LoginContainer    from './containers/LoginContainer';
 import RegisterContainer from './containers/RegisterContainer';
 import {UserAuthWrapper} from 'redux-auth-wrapper'
-import {routerActions} from 'react-router-redux';
-import {push} from 'react-router-redux';
-
-
-
+import {routerActions}   from 'react-router-redux';
+import {push}            from 'react-router-redux';
 
 // Redirects to /login by default
 const Auth = UserAuthWrapper({

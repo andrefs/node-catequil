@@ -1,5 +1,5 @@
 import express  from 'express';
-import mongoose from 'mongoose';
+import db       from './db';
 import async    from 'async';
 import logger   from 'morgan';
 import React    from 'react';
@@ -14,6 +14,7 @@ import {syncHistoryWithStore}  from 'react-router-redux'
 import jwt from 'express-jwt';
 import socketioJwt from 'socketio-jwt';
 import favicon from 'express-favicon';
+let debug = require('debug')('server');
 
 let app = new express();
 
@@ -39,23 +40,6 @@ io.sockets
     });
 
 
-
-// Database connection
-
-let mongo_uri = process.env.MONGO_URI;
-if(!mongo_uri && config && config.db && config.db.uri){
-    mongo_uri = config.db.uri;
-} else {
-    mongo_uri = 'mongodb://localhost/catequil_noconfig';
-    console.warn(`MongoDB URI not set, using hardcoded default: ${mongo_uri} ...`);
-}
-mongoose.connect(mongo_uri);
-
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-if(process.env.NODE_ENV === 'development'){
-    mongoose.set('debug', true);
-}
 
 
 // Settings, middleware etc
@@ -110,7 +94,7 @@ app.use(function(req, res){
         // Redirect
         else if (redirectLocation) {
             let redirectURL = redirectLocation.pathname + redirectLocation.search;
-            console.info('Redirecting to '+redirectURL);
+            debug('Redirecting to '+redirectURL);
             res.status(302).redirect(redirectURL);
         }
 
@@ -146,15 +130,15 @@ const port = process.env.PORT || (config && config.server && config.server.port)
 async.series([
     function(next){ db.once('open', next); },
     function(next){
-        console.info(`Connected to MongoDB database ${mongo_uri}`);
+        debug(`Connected to MongoDB database!`);
         http.listen(port,'0.0.0.0', next);
     }],
     function(err){
         if(err){
-            consolle.error.bind(console, 'Error:');
+            console.error.bind(console, 'Error:');
             process.exit(1);
         }
-        console.info(`Server running on http://localhost:${port}`);
+        debug(`Server running on http://localhost:${port}`);
     }
 );
 

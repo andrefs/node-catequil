@@ -3,7 +3,7 @@ module.exports = {
         uri: 'mongodb://localhost/catequil_test'
     },
     server: {
-        port: 9753,
+        port: 9754,
         host: 'localhost'
     },
     facebook: {
