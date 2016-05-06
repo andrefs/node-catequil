@@ -99,36 +99,4 @@ describe('Users Controllers', function() {
             });
     });
 
-    it('should allow authenticated user to send a message', function(done){
-        const message = {
-            author: mongoose.Types.ObjectId(userID),
-            channel: mongoose.Types.ObjectId(general._id),
-            text: 'This is a test message'
-        };
-
-        const now = Date.now();
-        const week_later = now + 7*24*60*60;
-        const claims = {
-            sub: userID,
-            iat: now,
-            exp: week_later
-        };
-        const token = jwt.encode(claims, jwtSecret);
-
-        Message.count({channel: mongoose.Types.ObjectId(general._id),}, function(err, totalMessagesBefore){
-            request(server)
-                .post('/api/messages')
-                .send(message)
-                .set('Authorization', `Bearer ${token}`)
-                .expect(201)
-                .end(function(err, res){
-                    expect(err).to.be.null;
-                    Message.count({channel: mongoose.Types.ObjectId(general._id),}, function(err, totalMessagesAfter){
-                        expect(totalMessagesAfter).to.equal(totalMessagesBefore+1);
-                        return done();
-                    });
-                });
-        });
-    });
-
 });

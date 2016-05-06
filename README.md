@@ -4,7 +4,7 @@
 
 `node-catequil` is an isomorphic (universal) chat app written in Express + MongoDB + React + Redux.
 
-It is named after the _Catequil_, an Inca god of thunder and lightning.
+It is named after _Catequil_, an Inca god of thunder and lightning.
 
 Currently it is still very much a work in progress.
 
@@ -51,7 +51,7 @@ including:
 
 See `package.json` for more details.
 
-# Roadmap
+## Roadmap
 
 - [ ] Add multiple default user images and randomize when registering
 - [ ] Allow to create new chat rooms
