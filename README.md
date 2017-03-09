@@ -1,5 +1,7 @@
 # node-catequil
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/andrefs/node-catequil.svg)](https://greenkeeper.io/)
+
 ![node-catequil logo](client/images/catequil.png)
 
 `node-catequil` is an isomorphic (universal) chat app written in Express + MongoDB + React + Redux.
